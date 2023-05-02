@@ -16,7 +16,13 @@ from transformers import (
     TrainingArguments,
     set_seed,
 )
-from consts import *
+from consts import (
+    RESPONSE_KEY_NL, 
+    DEFAULT_INPUT_MODEL,
+    MAX_LENGTH,
+    DEFAULT_TRAINING_DATASET,
+    DEFAULT_SEED
+)
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +31,7 @@ class DataCollatorForCompletionOnlyLM(DataCollatorForLanguageModeling):
     def torch_call(self, examples: List[Union[List[int], Any, Dict[str, Any]]]) -> Dict[str, Any]:
         batch = super().torch_call(examples)
 
-        response_token_ids = self.tokenizer.encode(RESPONSE_KEY)
+        response_token_ids = self.tokenizer.encode(RESPONSE_KEY_NL)
 
         labels = batch["labels"].clone()
 
